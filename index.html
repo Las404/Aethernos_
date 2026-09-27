@@ -1,0 +1,728 @@
+<!doctype html>
+<html lang="ko" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>에테르노스 연대기</title>
+<meta name="description" content="봉인된 마왕이 서서히 깨어나는 시대. 에테르노스(Aethernos) 세계관 · 지역 · 인물 · 팔대열강 기록.">
+<meta name="theme-color" content="#07080c">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Crect width='48' height='48' rx='10' fill='%2307080c'/%3E%3Cg fill='none' stroke='%23d9b36a' stroke-width='2'%3E%3Ccircle cx='24' cy='24' r='18'/%3E%3Cpath d='M12 24c6.500-7 17.500-7 24 0-6.500 7-17.500 7-24 0Z'/%3E%3C/g%3E%3Cpath d='M24 18.500c-1.500 3.600-1.500 7.400 0 11 1.500-3.600 1.500-7.400 0-11Z' fill='%23e0475c'/%3E%3C/svg%3E">
+<meta property="og:title" content="에테르노스 연대기 — AETHERNOS">
+<meta property="og:description" content="봉인된 마왕이 서서히 깨어나는 시대. 종족도 신분도 묻지 않는 모험가들의 자유로운 대륙.">
+<meta property="og:image" content="images/배경/메인 배경.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;800&family=Hahmlet:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="css/style.css?v=7">
+<script>
+/* 언어 고르기: 주소의 ?lang= → 저장된 선택 → 브라우저 언어 순서 */
+(function () {
+  var d = document.documentElement, ok = { ko: 1, en: 1, ja: 1, zh: 1 }, L = 'ko';
+  d.classList.replace('no-js', 'js');
+  try { if (sessionStorage.getItem('aeth-unsealed') === '1') d.classList.add('skip-gate'); } catch (e) {}
+  try {
+    var q = new URLSearchParams(location.search).get('lang'), s = localStorage.getItem('aeth-lang');
+    if (q && ok[q]) { L = q; localStorage.setItem('aeth-lang', q); }
+    else if (s && ok[s]) L = s;
+    else {
+      var n = navigator.languages || [navigator.language || 'ko'];
+      L = 'en';
+      for (var i = 0; i < n.length; i++) { var x = String(n[i]).toLowerCase().slice(0, 2); if (ok[x]) { L = x; break; } }
+    }
+  } catch (e) {}
+  window.AETH_LANG = L;
+  d.lang = L === 'zh' ? 'zh-Hant' : L;
+  d.setAttribute('data-lang', L);
+  if (L !== 'ko') {
+    d.classList.add('i18n-wait');
+    setTimeout(function () { d.classList.remove('i18n-wait'); }, 3000);
+    var f = { ja: 'Noto+Sans+JP:wght@400;500;600;700&family=Noto+Serif+JP:wght@500;700;900', zh: 'Noto+Sans+TC:wght@400;500;600;700&family=Noto+Serif+TC:wght@500;700;900' }[L];
+    if (f) document.write('<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=' + f + '&display=swap">');
+    document.write('<script src="js/lang/' + L + '.js?v=7"><\/script>');
+  }
+})();
+</script>
+</head>
+<body class="is-locked">
+
+<!-- ══════════ 뒷배경 (페이지마다 바뀌는 그림 + 에테르 입자) ══════════ -->
+<div class="backdrop" aria-hidden="true">
+  <div class="backdrop__layer is-on" id="bgA"></div>
+  <div class="backdrop__layer" id="bgB"></div>
+</div>
+<canvas class="aether" id="aether" aria-hidden="true"></canvas>
+
+<!-- ══════════ SVG 스프라이트 (문장 · 아이콘) ══════════ -->
+<svg class="sprite" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="g-gold" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f4dea3"/><stop offset=".55" stop-color="#d9b36a"/><stop offset="1" stop-color="#8a6a33"/>
+    </linearGradient>
+  </defs>
+  <!-- 진영 문장 -->
+  <symbol id="em-asrahel" viewBox="0 0 48 48"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><path d="M24 4.5 39.5 9.5V23c0 10-7 16.8-15.5 20.5C15.5 39.8 8.5 33 8.5 23V9.5Z"/><path d="M15.5 27.5v-9l4.3 4.2L24 16l4.2 6.7 4.3-4.2v9Z"/><path d="M15.5 31.5h17M24 35v3.5"/></g></symbol>
+  <symbol id="em-ranos" viewBox="0 0 48 48"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><circle cx="24" cy="24" r="19"/><path d="M24 6.5 27.2 20.8 41.5 24 27.2 27.2 24 41.5 20.8 27.2 6.5 24 20.8 20.8Z"/><path d="M31.5 16.5 26.6 24l4.9 7.5L24 26.6l-7.5 4.9 4.9-7.5-4.9-7.5 7.5 4.9Z" opacity=".55"/><circle cx="24" cy="24" r="2" fill="currentColor"/></g></symbol>
+  <symbol id="em-granbasel" viewBox="0 0 48 48"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><path d="M3.5 42 16.5 20l6.5 9.5L31.5 16 44.5 42Z"/><path d="M12.4 27 16.5 20l3.4 5M27.8 22.4 31.5 16l3.6 6.4"/><path d="M24 2.5v25M19.5 8h9"/></g></symbol>
+  <symbol id="em-zebolba" viewBox="0 0 48 48"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><path d="M11 5c-3 9.5 0 17.5 9.5 21.5M37 5c3 9.5 0 17.5-9.5 21.5"/><path d="M8.5 34c8.5-8.5 22.5-8.5 31 0-8.5 8.5-22.5 8.5-31 0Z"/><path d="M24 28.8c-1.7 3.4-1.7 6.8 0 10.4 1.7-3.6 1.7-7 0-10.4Z" fill="currentColor"/></g></symbol>
+  <symbol id="em-nerva" viewBox="0 0 48 48"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><path d="M24 3.5c11.5 7.5 14.5 22.5 0 41-14.5-18.5-11.5-33.5 0-41Z"/><path d="M24 11v33.5M24 20l7-5.5M24 28.5l8.5-6.5M24 20l-7-5.5M24 28.5l-8.5-6.5"/></g></symbol>
+  <symbol id="em-wanderer" viewBox="0 0 48 48"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><circle cx="24" cy="24" r="19"/><path d="M24 8.5 28.5 24 24 39.5 19.5 24Z"/><path d="M24 8.5 28.5 24h-9Z" fill="currentColor" fill-opacity=".45"/><path d="M5 24h5M38 24h5M24 43v-3"/></g></symbol>
+  <symbol id="em-eight" viewBox="0 0 48 48"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M24 3 45 24 24 45 3 24Z"/><path d="M9.2 9.2h29.6v29.6H9.2Z"/><circle cx="24" cy="24" r="7"/><circle cx="24" cy="24" r="2" fill="currentColor"/></g></symbol>
+  <symbol id="em-seal" viewBox="0 0 48 48"><g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><circle cx="24" cy="24" r="21.5"/><path d="M24 4.5 43.5 24 24 43.5 4.5 24Z" opacity=".6"/><path d="M10.2 10.2h27.6v27.6H10.2Z" opacity=".6"/><path d="M13.5 24c6-6.5 15-6.5 21 0-6 6.5-15 6.5-21 0Z"/><path d="M24 19.5c-1.3 3-1.3 6 0 9 1.3-3 1.3-6 0-9Z" fill="currentColor"/></g></symbol>
+  <!-- 종족 -->
+  <symbol id="ic-human" viewBox="0 0 48 48"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="24" cy="15" r="6.5"/><path d="M11 41c0-9 5.8-15 13-15s13 6 13 15"/></g></symbol>
+  <symbol id="ic-elf" viewBox="0 0 48 48"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><path d="M15 35c-3.5-9.5 1-20 11.5-27 5-3.2 11-4.3 14.5-4.5-1 4.5-3.2 9.5-7 13.2-2.2 2.2-3.3 5-3.3 9 0 6.3-4.2 11.3-9.5 11.3-3 0-5.2-1-6.2-2Z"/><path d="M21 32c0-5.5 3-9.8 8.5-13"/></g></symbol>
+  <symbol id="ic-beast" viewBox="0 0 48 48"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M24 25c-6.2 0-10.5 5.2-10.5 10.2 0 4 3 5.3 5.2 5.3 2 0 3.2-1.1 5.3-1.1s3.3 1.1 5.3 1.1c2.2 0 5.2-1.3 5.2-5.3C34.5 30.2 30.2 25 24 25Z"/><ellipse cx="12.5" cy="20.5" rx="3.3" ry="4.3"/><ellipse cx="19.3" cy="12.5" rx="3.3" ry="4.5"/><ellipse cx="28.7" cy="12.5" rx="3.3" ry="4.5"/><ellipse cx="35.5" cy="20.5" rx="3.3" ry="4.3"/></g></symbol>
+  <symbol id="ic-dragon" viewBox="0 0 48 48"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><path d="M4 24C12 12.5 36 12.5 44 24 36 35.5 12 35.5 4 24Z"/><path d="M24 13.5c-3.2 6.5-3.2 14.5 0 21 3.2-6.5 3.2-14.5 0-21Z" fill="currentColor" fill-opacity=".85"/><path d="M8 11.5l4.5 3.5M40 11.5l-4.5 3.5M8 36.5l4.5-3.5M40 36.5l-4.5-3.5" opacity=".5"/></g></symbol>
+  <symbol id="ic-demon" viewBox="0 0 48 48"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><path d="M13 41c-5.5-9.5-5.5-21 2.2-32.5 0 9.5 3 15.5 8.8 17.8M35 41c5.5-9.5 5.5-21-2.2-32.5 0 9.5-3 15.5-8.8 17.8"/><path d="M17.5 36c4.3-3.3 8.7-3.3 13 0-4.3 3.3-8.7 3.3-13 0Z"/><circle cx="24" cy="36" r="1.4" fill="currentColor"/></g></symbol>
+  <!-- 원소 -->
+  <symbol id="el-fire" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" d="M12 21.2c-4 0-6.6-2.8-6.6-6.3 0-3.9 3.1-5.7 4.1-9.5 2 1.5 3.1 3.4 3.1 5.1 1-1 1.6-2.3 1.7-3.6 2.4 1.9 4.3 4.8 4.3 8 0 3.5-2.6 6.3-6.6 6.3Z"/></symbol>
+  <symbol id="el-water" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" d="M12 3.2c3.6 4.9 6.1 8.3 6.1 11.5a6.1 6.1 0 0 1-12.2 0c0-3.2 2.5-6.6 6.1-11.5Z"/></symbol>
+  <symbol id="el-earth" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M2.8 19 9.3 7.5l4.2 6.2 2.6-3.6L21.2 19Z"/><path d="M2.8 19h18.4"/></g></symbol>
+  <symbol id="el-wind" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" d="M3 9h11a3 3 0 1 0-3-3M3 13h15a3 3 0 1 1-3 3M3 17h7"/></symbol>
+  <symbol id="el-special" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"><path d="M12 2.5v4M12 17.5v4M2.5 12h4M17.5 12h4"/><path d="M12 7.5l1.4 3.1 3.1 1.4-3.1 1.4L12 16.5l-1.4-3.1L7.5 12l3.1-1.4Z"/></g></symbol>
+  <!-- UI -->
+  <symbol id="hex" viewBox="0 0 40 46"><path d="M20 1.5 38.5 12v22L20 44.5 1.5 34V12Z"/></symbol>
+  <symbol id="orn" viewBox="0 0 240 16"><g fill="none" stroke="currentColor"><path d="M0 8h98M142 8h98" stroke-width=".8"/><path d="M120 1.5l6.5 6.5-6.5 6.5-6.5-6.5Z"/><path d="M120 5l3 3-3 3-3-3Z" fill="currentColor"/></g><circle cx="105" cy="8" r="1.6" fill="currentColor"/><circle cx="135" cy="8" r="1.6" fill="currentColor"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" d="M4 12h15M13 6l6 6-6 6"/></symbol>
+  <symbol id="i-chev" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="m9 5 7 7-7 7"/></symbol>
+  <symbol id="i-item" viewBox="0 0 16 16"><path fill="none" stroke="currentColor" stroke-width="1.2" d="M8 1.5 14.5 8 8 14.5 1.5 8Z"/><circle cx="8" cy="8" r="1.6" fill="currentColor"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5 21 21"/></g></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4.5" y="10.5" width="15" height="10" rx="2"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"/><circle cx="12" cy="15.5" r="1.3" fill="currentColor"/></g></symbol>
+  <symbol id="i-unlock" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4.5" y="10.5" width="15" height="10" rx="2"/><path d="M8 10.5V7.5a4 4 0 0 1 7.6-1.7"/><circle cx="12" cy="15.5" r="1.3" fill="currentColor"/></g></symbol>
+  <symbol id="i-link" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M10 14a4.5 4.5 0 0 0 6.4 0l3-3a4.5 4.5 0 0 0-6.4-6.4l-1 1"/><path d="M14 10a4.5 4.5 0 0 0-6.4 0l-3 3a4.5 4.5 0 0 0 6.4 6.4l1-1"/></g></symbol>
+  <symbol id="i-shuffle" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h3.5c5 0 6 10 11 10H21M3 17h3.5c2 0 3.2-1.6 4.3-3.6M14 9.6C15 8 16 7 17.5 7H21"/><path d="m18 4 3 3-3 3M18 14l3 3-3 3"/></g></symbol>
+  <symbol id="i-expand" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" d="M14 4h6v6M10 20H4v-6M20 4l-7 7M4 20l7-7"/></symbol>
+  <symbol id="i-close" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" d="M6 6l12 12M18 6 6 18"/></symbol>
+  <symbol id="i-person" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="12" cy="8" r="3.6"/><path d="M5 20c0-4 3.1-6.8 7-6.8s7 2.8 7 6.8"/></g></symbol>
+  <symbol id="i-book" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M4 5.5C6.5 4 9.5 4 12 6c2.5-2 5.5-2 8-.5v13c-2.5-1.5-5.5-1.5-8 .5-2.5-2-5.5-2-8-.5Z"/><path d="M12 6v13"/></g></symbol>
+  <symbol id="i-globe" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3c2.6 2.6 3.8 5.6 3.8 9s-1.2 6.4-3.8 9c-2.6-2.6-3.8-5.6-3.8-9S9.4 5.6 12 3Z"/></g></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" d="m5 12.5 4.5 4.5L19 7.5"/></symbol>
+</svg>
+
+<!-- ══════════ 인트로 : 봉인의 문 ══════════ -->
+<div class="gate" id="gate" role="dialog" aria-modal="true" aria-label="AETHERNOS">
+  <div class="gate__half gate__half--l"><div class="gate__art">
+    <svg class="seal" viewBox="-210 -210 420 420" aria-hidden="true">
+      <defs>
+        <path id="sealRing" d="M0,-177 A177,177 0 1,1 -0.01,-177"/>
+        <radialGradient id="sealHalo" r="50%">
+          <stop offset="0" stop-color="#f4dea3" stop-opacity=".22"/>
+          <stop offset=".6" stop-color="#d9b36a" stop-opacity=".06"/>
+          <stop offset="1" stop-color="#d9b36a" stop-opacity="0"/>
+        </radialGradient>
+        <radialGradient id="eyeGlow" r="50%">
+          <stop offset="0" stop-color="#ff5d73" stop-opacity=".9"/>
+          <stop offset="1" stop-color="#e0475c" stop-opacity="0"/>
+        </radialGradient>
+      </defs>
+      <circle class="seal__halo" r="205" fill="url(#sealHalo)"/>
+      <g class="seal__outer">
+        <circle r="199" class="s-thin"/>
+        <circle r="191" class="s-bold"/>
+        <circle r="164" class="s-thin"/>
+      </g>
+      <g class="seal__runes">
+        <text class="s-text"><textPath href="#sealRing" textLength="1100" lengthAdjust="spacing">QVOD SIGNATVM EST NON DORMIT ✦ SIGILLVM TARTARI ✦ AETHERNOS ✦ FRAGMENTA REGIS ✦</textPath></text>
+      </g>
+      <g class="seal__ticks">
+        <circle r="152" class="s-ticks"/>
+        <circle r="141" class="s-thin"/>
+      </g>
+      <g class="seal__star">
+        <path class="s-mid" d="M0,-136 L136,0 L0,136 L-136,0Z"/>
+        <path class="s-mid" d="M-96.2,-96.2 H96.2 V96.2 H-96.2Z"/>
+        <circle r="4" cx="0" cy="-136" class="s-dot"/><circle r="4" cx="136" cy="0" class="s-dot"/><circle r="4" cx="0" cy="136" class="s-dot"/><circle r="4" cx="-136" cy="0" class="s-dot"/>
+        <circle r="3" cx="96.2" cy="-96.2" class="s-dot"/><circle r="3" cx="96.2" cy="96.2" class="s-dot"/><circle r="3" cx="-96.2" cy="96.2" class="s-dot"/><circle r="3" cx="-96.2" cy="-96.2" class="s-dot"/>
+      </g>
+      <g class="seal__hex">
+        <circle r="96" class="s-thin"/>
+        <path class="s-thin" d="M0,-92 L79.7,46 L-79.7,46Z"/>
+        <path class="s-thin" d="M0,92 L79.7,-46 L-79.7,-46Z"/>
+      </g>
+      <circle r="60" class="s-bold s-core"/>
+      <circle class="eye-glow" r="70" fill="url(#eyeGlow)"/>
+      <g class="seal__eye">
+        <g class="eye-closed">
+          <path d="M-40,-2 Q0,24 40,-2"/>
+          <path d="M-27,9 l-5,9 M-10,14 l-1.5,10 M10,14 l1.5,10 M27,9 l5,9"/>
+        </g>
+        <g class="eye-open">
+          <path class="eye-white" d="M-46,0 Q0,-36 46,0 Q0,36 -46,0Z"/>
+          <path class="eye-pupil" d="M0,-23 C-9,-8 -9,8 0,23 C9,8 9,-8 0,-23Z"/>
+        </g>
+      </g>
+    </svg>
+  </div></div>
+  <div class="gate__half gate__half--r"><div class="gate__art"></div></div>
+
+  <svg class="gate__crack" viewBox="-210 -210 420 420" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+    <polyline pathLength="1" points="0,-215 7,-172 -6,-131 8,-92 -5,-52 6,-14 -7,24 5,63 -8,102 6,141 -5,178 0,215"/>
+  </svg>
+  <div class="gate__flash" aria-hidden="true"></div>
+
+  <div class="gate__ui">
+    <p class="gate__mark"><span>AETHERNOS</span><small data-i18n="gate.sub">봉인된 대륙의 연대기</small></p>
+    <button class="gate__key" id="gateKey" type="button" aria-label="길게 눌러 봉인을 해제하고 에테르노스로 들어가기" data-i18n-attr="aria-label:gate.keyLabel">
+      <svg class="gate__ring" viewBox="0 0 100 100" aria-hidden="true">
+        <circle class="gate__ring-track" cx="50" cy="50" r="46"/>
+        <circle class="gate__ring-fill" cx="50" cy="50" r="46" pathLength="1"/>
+      </svg>
+    </button>
+    <p class="gate__hint" id="gateHint"><span data-i18n-html="gate.hint">문장을 <b>길게 눌러</b> 봉인을 해제하세요</span><kbd data-i18n="gate.kbd">ENTER 길게</kbd></p>
+  </div>
+  <button class="gate__skip" id="gateSkip" type="button"><span data-i18n="gate.skip">건너뛰기</span><svg aria-hidden="true"><use href="#i-arrow"/></svg></button>
+</div>
+
+<!-- ══════════ 내비게이션 ══════════ -->
+<header class="nav" id="nav">
+  <a class="nav__brand" href="#/" aria-label="에테르노스 처음으로" data-i18n-attr="aria-label:nav.home">
+    <svg class="nav__mark" aria-hidden="true"><use href="#em-seal"/></svg>
+    <span>AETHERNOS</span>
+  </a>
+  <nav class="nav__links" id="navLinks" aria-label="챕터" data-i18n-attr="aria-label:nav.chapters">
+    <a href="#/world" data-nav="world"><i>I</i><span data-i18n="nav.world">세계관</span></a>
+    <a href="#/map" data-nav="map"><i>II</i><span data-i18n="nav.map">대륙 지도</span></a>
+    <a href="#/regions" data-nav="regions"><i>III</i><span data-i18n="nav.regions">지역</span></a>
+    <a href="#/power" data-nav="power"><i>IV</i><span data-i18n="nav.power">무력 체계</span></a>
+    <a href="#/characters" data-nav="characters"><i>V</i><span data-i18n="nav.characters">인물</span></a>
+    <a href="#/relations" data-nav="relations"><i>VI</i><span data-i18n="nav.relations">관계도</span></a>
+    <a href="#/eight" data-nav="eight" class="nav__eight"><i>VII</i><span data-i18n="nav.eight">팔대열강</span></a>
+  </nav>
+  <div class="nav__tools">
+    <button class="tool" id="searchBtn" type="button" aria-label="인물 · 지역 검색 (Ctrl+K)" data-i18n-attr="aria-label:nav.searchLabel">
+      <svg aria-hidden="true"><use href="#i-search"/></svg><span class="tool__label" data-i18n="nav.search">검색</span><kbd class="tool__kbd">Ctrl K</kbd>
+    </button>
+    <button class="tool tool--secret" id="secretBtn" type="button" aria-pressed="false" title="비밀 기록(스포일러) 보이기 / 숨기기" data-i18n-attr="title:nav.secretTitle">
+      <svg aria-hidden="true"><use href="#i-lock"/></svg><span class="tool__label" data-i18n="nav.secret">비밀 기록</span>
+    </button>
+    <div class="lang" id="lang">
+      <button class="tool tool--lang" id="langBtn" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="langMenu" aria-label="언어 / Language" data-i18n-attr="aria-label:nav.langLabel">
+        <svg aria-hidden="true"><use href="#i-globe"/></svg><span class="tool__code" id="langCur">KO</span>
+      </button>
+      <ul class="lang__menu" id="langMenu" role="menu" aria-label="Language">
+        <li role="none"><button type="button" role="menuitemradio" data-lang="ko" lang="ko"><b>한국어</b><small>Korean</small><svg aria-hidden="true"><use href="#i-check"/></svg></button></li>
+        <li role="none"><button type="button" role="menuitemradio" data-lang="en" lang="en"><b>English</b><small>영어</small><svg aria-hidden="true"><use href="#i-check"/></svg></button></li>
+        <li role="none"><button type="button" role="menuitemradio" data-lang="ja" lang="ja"><b>日本語</b><small>Japanese</small><svg aria-hidden="true"><use href="#i-check"/></svg></button></li>
+        <li role="none"><button type="button" role="menuitemradio" data-lang="zh" lang="zh-Hant"><b>繁體中文</b><small>Traditional Chinese</small><svg aria-hidden="true"><use href="#i-check"/></svg></button></li>
+      </ul>
+    </div>
+    <button class="nav__toggle" id="navToggle" type="button" aria-expanded="false" aria-controls="navLinks" aria-label="메뉴 열기"><span></span><span></span></button>
+  </div>
+  <div class="nav__progress" id="progress" aria-hidden="true"></div>
+</header>
+
+<main id="main" tabindex="-1">
+
+<!-- ══════════ 0. 프롤로그 ══════════ -->
+<section class="page page--home" data-page="home" aria-label="Prologue">
+  <div class="hero">
+    <div class="hero__bg" aria-hidden="true"><img src="images/배경/메인 배경.jpg" alt="" decoding="async" fetchpriority="high"></div>
+    <div class="wrap hero__grid">
+      <div class="hero__copy">
+        <p class="eyebrow" data-rise style="--i:0">The Chronicle of a Sealed Continent</p>
+        <h1 class="hero__title" data-rise style="--i:1">
+          <span class="hero__latin">AETHERNOS</span>
+          <span class="hero__ko" data-i18n="home.titleSub">에테르노스 연대기</span>
+        </h1>
+        <p class="hero__tag" data-rise style="--i:2" data-i18n="home.tag">봉인된 마왕이 서서히 깨어나는 시대.</p>
+        <p class="hero__lead" data-rise style="--i:3" data-i18n="home.lead">종족도 신분도 묻지 않는 모험가들이 마물을 베며 정점을 향해 오르는 자유로운 대륙. 어디든 갈 수 있는 열린 세계다.</p>
+        <div class="hero__cta" data-rise style="--i:4">
+          <a class="btn btn--gold" href="#/world"><span data-i18n="home.ctaWorld">연대기 펼치기</span><svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+          <a class="btn btn--ghost" href="#/characters" data-i18n="home.ctaChars">인물 만나기</a>
+        </div>
+      </div>
+
+      <aside class="omen" data-rise style="--i:5" aria-label="나락 · 타르타로스 봉인 관측 기록" data-i18n-attr="aria-label:home.omenAria">
+        <div class="omen__head">
+          <span class="omen__dot" aria-hidden="true"></span>
+          <span class="omen__label" data-i18n="home.omenLabel">봉인 관측 · 나락 · 타르타로스</span>
+          <span class="omen__state" id="omenState" data-i18n="omen.unstable">불안정</span>
+        </div>
+        <svg class="omen__wave" viewBox="0 0 240 64" preserveAspectRatio="none" aria-hidden="true">
+          <defs>
+            <linearGradient id="omenGrad" x1="0" x2="1">
+              <stop offset="0" stop-color="#8fe3f5" stop-opacity=".25"/>
+              <stop offset=".55" stop-color="#8fe3f5"/>
+              <stop offset=".8" stop-color="#e0475c"/>
+              <stop offset="1" stop-color="#e0475c" stop-opacity=".4"/>
+            </linearGradient>
+          </defs>
+          <path class="omen__grid" d="M0 16H240M0 32H240M0 48H240M60 0V64M120 0V64M180 0V64"/>
+          <path id="omenPath" class="omen__line" d="M0 32H240"/>
+        </svg>
+        <dl class="omen__rows">
+          <div><dt data-i18n="home.omenSeal">봉인 상태</dt><dd data-i18n="home.omenSealV">약화 진행 중</dd></div>
+          <div><dt data-i18n="home.omenWave">마물 파도</dt><dd class="is-up" data-i18n="home.omenWaveV">빈도 증가</dd></div>
+          <div><dt data-i18n="home.omenCoord">봉인지 좌표</dt><dd><span class="redact" tabindex="0" role="button" data-reveal data-i18n="common.topSecret">세계 최고 기밀</span></dd></div>
+        </dl>
+        <div class="clock" aria-label="종말 시계 — 현재 1단계" data-i18n-attr="aria-label:home.clockAria">
+          <p class="clock__label" data-i18n="home.clock">Doomsday Clock · 종말 시계</p>
+          <ol class="clock__steps">
+            <li class="is-now"><b>1</b></li><li><b>2</b></li><li><b>3</b></li><li><b>4</b></li>
+          </ol>
+          <p class="clock__now" data-i18n-html="home.clockNow"><b>1단계 · 전조</b> 마물 파도가 잦아진다. 원인은 알려지지 않았고, 소문만 무성하다.</p>
+        </div>
+      </aside>
+    </div>
+    <button class="hero__scroll" type="button" data-scroll="chapters" aria-label="목차로 내려가기" data-i18n-attr="aria-label:home.scrollAria"><span data-i18n="home.scroll">목차</span></button>
+  </div>
+
+  <div class="wrap">
+    <section class="block" id="chapters" aria-labelledby="chaptersTitle">
+      <header class="sec-head">
+        <p class="eyebrow">Contents</p>
+        <h2 id="chaptersTitle" data-i18n="home.contents">연대기 목차</h2>
+        <p class="sec-head__sub" data-i18n="home.contentsSub">일곱 장으로 나눈 기록. 원하는 장부터 펼쳐 보세요.</p>
+      </header>
+      <ol class="chapters">
+        <li><a class="chap" href="#/world"><span class="chap__art" aria-hidden="true" style="background-image:url('images/배경/메인 배경.jpg')"></span><i>I</i><b data-i18n="nav.world">세계관</b><span data-i18n="home.chWorld">봉인과 마물, 종족과 진영 — 대륙의 법칙</span></a></li>
+        <li><a class="chap" href="#/map"><span class="chap__art" aria-hidden="true" style="background-image:url('images/지역/전체 메인 지도.jpg')"></span><i>II</i><b data-i18n="nav.map">대륙 지도</b><span data-i18n="home.chMap">다섯 터전의 위치와 길</span></a></li>
+        <li><a class="chap" href="#/regions"><span class="chap__art" aria-hidden="true" style="background-image:url('images/지역/그랑바젤.jpg')"></span><i>III</i><b data-i18n="nav.regions">지역</b><span data-i18n="home.chRegions">다섯 터전과, 누구의 터전도 아닌 곳</span></a></li>
+        <li><a class="chap" href="#/power" data-top><span class="chap__art" aria-hidden="true" style="background-image:url('images/캐릭터/실비아 뤼트.jpg')"></span><i>IV</i><b data-i18n="nav.power">무력 체계</b><span data-i18n="home.chPower">검술 3대 유파 · 마법 · 모험가 등급</span></a></li>
+        <li><a class="chap" href="#/characters" data-top><span class="chap__art" aria-hidden="true" style="background-image:url('images/캐릭터/비비안 아스라.jpg')"></span><i>V</i><b data-i18n="nav.characters">인물</b><span data-i18n="home.chCharacters">소속별로 만나는 대륙의 사람들</span></a></li>
+        <li><a class="chap" href="#/relations" data-top><span class="chap__art" aria-hidden="true" style="background-image:url('images/캐릭터/루나 벨구디아.jpg')"></span><i>VI</i><b data-i18n="nav.relations">관계도</b><span data-i18n="home.chRelations">진영을 넘어 얽힌 인연의 실</span></a></li>
+        <li class="chapters__wide"><a class="chap chap--gold" href="#/eight" data-top><span class="chap__art" aria-hidden="true" style="background-image:url('images/캐릭터/모르가나 벨구디아.jpg')"></span><i>VII</i><b data-i18n="nav.eight">팔대열강</b><span data-i18n="home.chEight">현세 무력의 정점에 선 여덟</span></a></li>
+      </ol>
+    </section>
+
+    <section class="block" aria-labelledby="spotTitle">
+      <header class="sec-head">
+        <p class="eyebrow">Spotlight</p>
+        <h2 id="spotTitle" data-i18n="home.spotlight">오늘의 인물</h2>
+      </header>
+      <div class="spotlight" id="spotlight" aria-live="polite"></div>
+    </section>
+  </div>
+</section>
+
+<!-- ══════════ I. 세계관 ══════════ -->
+<section class="page" data-page="world" aria-labelledby="worldTitle" hidden>
+  <header class="chapter"><span class="chapter__art" aria-hidden="true" style="background-image:url('images/배경/메인 배경.jpg')"></span>
+    <p class="chapter__num" data-rise style="--i:0">Chapter I</p>
+    <h1 class="chapter__title" id="worldTitle" data-rise style="--i:1" data-i18n="nav.world">세계관</h1>
+    <p class="chapter__en" data-rise style="--i:1">The World</p>
+    <p class="chapter__sub" data-rise style="--i:2" data-i18n="world.sub">봉인된 마왕이 서서히 깨어나는 시대. 대륙을 움직이는 법칙과 그 위에 사는 이들.</p>
+  </header>
+  <div class="wrap">
+    <nav class="subnav" aria-label="세계관 목차" data-i18n-attr="aria-label:world.subnavAria" data-subnav>
+      <button type="button" data-scroll="w-overview" data-i18n="world.nOverview">개요</button>
+      <button type="button" data-scroll="w-rule" data-i18n="world.nRule">시그니처 룰</button>
+      <button type="button" data-scroll="w-races" data-i18n="world.nRaces">종족</button>
+      <button type="button" data-scroll="w-factions" data-i18n="world.nFactions">진영</button>
+      <button type="button" data-scroll="w-eight" data-i18n="world.nEight">세계 최강 8인</button>
+    </nav>
+
+    <section class="block" id="w-overview" aria-labelledby="wOverTitle">
+      <header class="sec-head"><p class="eyebrow">Overview</p><h2 id="wOverTitle" data-i18n="world.nOverview">개요</h2></header>
+      <div class="overview">
+        <p class="overview__lead rv" data-i18n-html="world.lead">봉인된 마왕이 서서히 깨어나는 시대. 종족도 신분도 묻지 않는 모험가들이 마물을 베며 정점을 향해 오르는 자유로운 대륙. <em>어디든 갈 수 있는 열린 세계</em>다.</p>
+        <div class="tablets">
+          <article class="tablet rv">
+            <p class="eyebrow">Background Threat</p>
+            <h3 data-i18n="world.t1h">세계 전체의 일</h3>
+            <p data-i18n="world.t1p">태고의 마왕이 봉인지 「나락 · 타르타로스」에 잠들어 있고, 그 봉인이 서서히 풀려간다. 어느 진영의 음모가 아니라 세계 전체에 드리운 먹구름이다. 진영들은 이것을 두고 편을 갈라 싸우지 않는다.</p>
+            <a class="link-arrow link-arrow--crimson" href="#/regions/abyss"><span data-i18n="common.abyss">나락 · 타르타로스</span><svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+          </article>
+          <article class="tablet rv">
+            <p class="eyebrow">Stampede</p>
+            <h3 data-i18n="world.t2h">마물 파도</h3>
+            <p data-i18n="world.t2p">봉인이 약해질 때마다 특정 지역에 마물이 폭발적으로 쏟아지는 현상. 그 빈도는 점점 잦아지고 있다 — 봉인이 풀려가는 징후다.</p>
+          </article>
+          <article class="tablet rv">
+            <p class="eyebrow">Free Continent</p>
+            <h3 data-i18n="world.t3h">열린 세계</h3>
+            <p data-i18n="world.t3p">진영은 서로 싸우는 조직이 아니라 각자의 터전이다. 진영 사이는 동맹·교류·거리감 정도이며, 누구든 자유롭게 오갈 수 있다.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="block" id="w-rule" aria-labelledby="ruleTitle">
+      <header class="sec-head"><p class="eyebrow">Signature Rule</p><h2 id="ruleTitle" data-i18n="world.ruleH">마물은 봉인에서 새어나온 조각이다</h2></header>
+      <figure class="rule rv">
+        <ol class="rule__flow">
+          <li class="rule__node rule__node--abyss">
+            <span class="rule__icon" aria-hidden="true"><svg viewBox="0 0 48 48"><use href="#em-seal"/></svg></span>
+            <span><b data-i18n="common.abyss">나락 · 타르타로스</b><small data-i18n="world.ruleAbyss">태고의 마왕이 잠든 봉인지</small></span>
+          </li>
+          <li class="rule__link" aria-hidden="true"><svg viewBox="0 0 120 24"><path class="ln" d="M2 12H110"/><path class="hd" d="M104 5l9 7-9 7"/></svg><span data-i18n-html="world.ruleL1">봉인이 약해질수록<br>더 많이 · 더 강하게</span></li>
+          <li class="rule__node rule__node--beast">
+            <span class="rule__icon" aria-hidden="true"><svg viewBox="0 0 48 48"><use href="#em-zebolba"/></svg></span>
+            <span><b data-i18n="world.ruleBeast">마물 · 마물 파도</b><small data-i18n="world.ruleBeastS">새어나온 조각, 폭발하면 스탬피드</small></span>
+          </li>
+          <li class="rule__link rule__link--back" aria-hidden="true"><svg viewBox="0 0 120 24"><path class="ln" d="M118 12H10"/><path class="hd" d="M16 5l-9 7 9 7"/></svg><span data-i18n-html="world.ruleL2">토벌 — 세계를<br>지탱하는 방파제</span></li>
+          <li class="rule__node rule__node--hero">
+            <span class="rule__icon" aria-hidden="true"><svg viewBox="0 0 48 48"><use href="#em-granbasel"/></svg></span>
+            <span><b data-i18n="world.ruleHero">모험가</b><small data-i18n="world.ruleHeroS">종족도 신분도 묻지 않는 자들</small></span>
+          </li>
+        </ol>
+        <figcaption class="rule__cap" data-i18n-html="world.ruleCap">봉인이 약해질수록 마물은 더 많이, 더 강하게 쏟아진다. 모험가의 마물 토벌은 사실상 세계를 지탱하는 방파제지만 — <span class="redact" tabindex="0" role="button" data-reveal>대다수는 이 진실을 모른다.</span></figcaption>
+      </figure>
+    </section>
+
+    <section class="block" id="w-races" aria-labelledby="racesTitle">
+      <header class="sec-head"><p class="eyebrow">Peoples</p><h2 id="racesTitle" data-i18n="world.nRaces">종족</h2></header>
+      <div class="races">
+        <article class="race rv">
+          <svg class="race__icon" aria-hidden="true"><use href="#ic-human"/></svg>
+          <h3 data-i18n-html="world.rHuman">인족 <span>Human</span></h3>
+          <p data-i18n="world.rHumanP">개체수와 번식력이 가장 많으며 중앙 대륙을 지배한다. 타고난 특별함은 없으나 수와 적응력으로 버틴다.</p>
+          <ul class="tags" data-i18n-html="world.rHumanT"><li>개체수 최다</li><li>적응력</li><li>중앙 대륙</li></ul>
+        </article>
+        <article class="race rv">
+          <svg class="race__icon" aria-hidden="true"><use href="#ic-elf"/></svg>
+          <h3 data-i18n-html="world.rElf">엘프 · 하프엘프 <span>Elf</span></h3>
+          <p data-i18n="world.rElfP">수백 년을 사는 장명 종족. 선천적으로 마력 친화가 높아 라노스 마도 연합국의 다수를 이룬다.</p>
+          <ul class="tags" data-i18n-html="world.rElfT"><li>수백 년 수명</li><li>마력 친화</li></ul>
+        </article>
+        <article class="race rv">
+          <svg class="race__icon" aria-hidden="true"><use href="#ic-beast"/></svg>
+          <h3 data-i18n-html="world.rBeast">수인족 <span>Beastfolk</span></h3>
+          <p data-i18n="world.rBeastP">대수해에 산다. 견족·묘족·표범족 등으로 나뉘며, 후각·청각·신체능력이 압도적이다.</p>
+          <ul class="tags" data-i18n-html="world.rBeastT"><li>견족</li><li>묘족</li><li>표범족</li><li>대수해</li></ul>
+        </article>
+        <article class="race rv">
+          <svg class="race__icon" aria-hidden="true"><use href="#ic-dragon"/></svg>
+          <h3 data-i18n-html="world.rDragon">용족 <span>Dragonkin</span></h3>
+          <p data-i18n="world.rDragonP">은발과 파충류의 눈동자. 소수이며 떠돌아다닌다. 태생부터 강력한 투기를 두른다.</p>
+          <ul class="tags" data-i18n-html="world.rDragonT"><li>은발</li><li>세로 동공</li><li>방랑</li></ul>
+        </article>
+        <article class="race race--wide rv">
+          <svg class="race__icon" aria-hidden="true"><use href="#ic-demon"/></svg>
+          <div>
+            <h3 data-i18n-html="world.rDemon">마족 <span>Demonkind</span></h3>
+            <p data-i18n="world.rDemonP">마대륙의 이형종. 부족명을 성씨로 사용한다.</p>
+          </div>
+          <ul class="tribes" data-i18n-html="world.tribes">
+            <li><b>벨구디아</b><span>명안 · 마안 · 텔레파시</span></li>
+            <li><b>녹스디아</b><span>불사 · 재생</span></li>
+            <li><b>이그니스</b><span>적각 · 화염 · 완력</span></li>
+            <li><b>헥사디아</b><span>육수 · 다무기</span></li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section class="block" id="w-factions" aria-labelledby="facTitle">
+      <header class="sec-head">
+        <p class="eyebrow">Five Domains</p><h2 id="facTitle" data-i18n="world.nFactions">진영</h2>
+        <p class="sec-head__sub" data-i18n="world.facSub">서로 싸우는 조직이 아니라 각자의 터전. 누구든 자유롭게 오갈 수 있다.</p>
+      </header>
+      <div class="factions" id="worldFactions"></div>
+    </section>
+
+    <section class="block" id="w-eight" aria-labelledby="w8Title">
+      <header class="sec-head">
+        <p class="eyebrow">The Eight Powers</p><h2 id="w8Title" data-i18n="world.nEight">세계 최강 8인</h2>
+        <p class="sec-head__sub" data-i18n="world.eightSub">현세 무력의 정점에 선 여덟. 순위는 상징적이다.</p>
+      </header>
+      <ol class="eight-mini" id="worldEight"></ol>
+    </section>
+  </div>
+</section>
+
+<!-- ══════════ II. 대륙 지도 ══════════ -->
+<section class="page" data-page="map" aria-labelledby="mapTitle" hidden>
+  <header class="chapter"><span class="chapter__art" aria-hidden="true" style="background-image:url('images/지역/전체 메인 지도.jpg')"></span>
+    <p class="chapter__num" data-rise style="--i:0">Chapter II</p>
+    <h1 class="chapter__title" id="mapTitle" data-rise style="--i:1" data-i18n="nav.map">대륙 지도</h1>
+    <p class="chapter__en" data-rise style="--i:1">The Continent</p>
+    <p class="chapter__sub" data-rise style="--i:2" data-i18n="map.sub">지명을 누르면 그 터전의 기록이 옆에 펼쳐집니다.</p>
+  </header>
+  <div class="wrap">
+    <div class="map-layout">
+      <figure class="map">
+        <div class="map__frame" id="mapFrame">
+          <img src="images/지역/전체 메인 지도.jpg" alt="에테르노스 전체 지도 — 북서쪽 설산, 북동쪽 공중 마도 도시, 중앙의 왕성, 서쪽의 붉은 협곡, 동쪽의 거대 원시림" data-i18n-attr="alt:map.alt" width="1516" height="1037" decoding="async">
+          <svg class="map__routes" viewBox="0 0 1516 1037" aria-hidden="true">
+            <path d="M770 373 C680 280 560 230 455 150"/>
+            <path d="M770 373 C860 280 940 230 1030 160"/>
+            <path d="M770 373 C620 430 420 480 300 600"/>
+            <path d="M770 373 C930 460 1080 520 1230 650"/>
+          </svg>
+          <a class="map__abyss" href="#/regions/abyss">
+            <svg viewBox="0 0 48 48" aria-hidden="true"><use href="#em-seal"/></svg>
+            <span><b data-glitch="나락 · 타르타로스" data-i18n="common.abyss" data-i18n-attr="data-glitch:common.abyss">나락 · 타르타로스</b><small data-i18n="map.abyssS">좌표 기밀 · 지도에 표기되지 않음</small></span>
+          </a>
+        </div>
+      </figure>
+      <aside class="map-card" id="mapCard" aria-live="polite"></aside>
+    </div>
+    <ul class="geo">
+      <li data-i18n-html="map.geo1"><b>중앙</b>아스라헬 왕국 · 왕도 아르스</li>
+      <li data-i18n-html="map.geo2"><b>북방</b>칼디아 빙설지대 · 검성지 그랑바젤</li>
+      <li data-i18n-html="map.geo3"><b>북부</b>라노스 마도 연합국</li>
+      <li data-i18n-html="map.geo4"><b>마대륙</b>마황도 제볼바</li>
+      <li data-i18n-html="map.geo5"><b>비안 대륙</b>대수해 네르바</li>
+      <li class="geo__secret" data-i18n-html="map.geo6"><b>???</b>봉인지 「나락 · 타르타로스」 — 위치는 세계 최고 기밀</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ══════════ III. 지역 ══════════ -->
+<section class="page" data-page="regions" aria-labelledby="regTitle" hidden>
+  <header class="chapter chapter--slim"><span class="chapter__art" aria-hidden="true" style="background-image:url('images/지역/그랑바젤.jpg')"></span>
+    <p class="chapter__num" data-rise style="--i:0">Chapter III</p>
+    <h1 class="chapter__title" id="regTitle" data-rise style="--i:1" data-i18n="nav.regions">지역</h1>
+    <p class="chapter__en" data-rise style="--i:1">Domains of Aethernos</p>
+  </header>
+  <div class="wrap">
+    <div class="rtabs" id="regionTabs" role="tablist" aria-label="지역 선택" data-i18n-attr="aria-label:regions.tabsAria"></div>
+    <article class="rview" id="regionView" role="tabpanel"></article>
+  </div>
+</section>
+
+<!-- ══════════ IV. 무력 체계 ══════════ -->
+<section class="page" data-page="power" aria-labelledby="powTitle" hidden>
+  <header class="chapter chapter--slim"><span class="chapter__art" aria-hidden="true" style="background-image:url('images/캐릭터/실비아 뤼트.jpg')"></span>
+    <p class="chapter__num" data-rise style="--i:0">Chapter IV</p>
+    <h1 class="chapter__title" id="powTitle" data-rise style="--i:1" data-i18n="nav.power">무력 체계</h1>
+    <p class="chapter__en" data-rise style="--i:1">Arts of War &amp; Magic</p>
+    <p class="chapter__sub" data-rise style="--i:2" data-i18n-html="power.sub">실제 실력은 투기와 마법의 위계로 가늠한다. <b>투기(鬪氣)</b> — 육체에 마력을 두르는 기술.</p>
+  </header>
+  <div class="wrap">
+    <div class="seg seg--lg" id="powerTabs" role="tablist" aria-label="무력 체계 분류" data-i18n-attr="aria-label:power.tabsAria">
+      <a role="tab" href="#/power/sword" data-power-tab="sword" data-i18n="power.tSword">검술</a>
+      <a role="tab" href="#/power/magic" data-power-tab="magic" data-i18n="power.tMagic">마법</a>
+      <a role="tab" href="#/power/guild" data-power-tab="guild" data-i18n="power.tGuild">모험가 등급</a>
+    </div>
+
+    <!-- 검술 -->
+    <div class="ppanel" data-power="sword" role="tabpanel">
+      <p class="ppanel__lead" data-i18n="power.swordLead">검술은 세 갈래로 나뉜다. 유파를 고르면 오른쪽 위계표의 칭호와 대표 인물이 바뀐다.</p>
+      <div class="sword">
+        <div class="styles" id="styles">
+          <button class="style" type="button" data-style="flash" aria-pressed="true">
+            <svg class="style__glyph" viewBox="0 0 160 80" aria-hidden="true"><path class="g-draw" d="M12 68 148 12"/><path class="g-echo" d="M34 72 150 24"/><circle cx="148" cy="12" r="2.5"/></svg>
+            <span class="eyebrow">Flash Style</span>
+            <span class="style__name" data-i18n-html="power.flashName">일섬류 <i>一閃流</i></span>
+            <span class="style__motto" data-i18n="power.flashMotto">“먼저 베는 자가 승리한다.”</span>
+            <span class="style__desc" data-i18n="power.flashDesc">극도의 속도와 살상력. 단 한 번의 공격에 모든 것을 건다.</span>
+          </button>
+          <button class="style" type="button" data-style="flow" aria-pressed="false">
+            <svg class="style__glyph" viewBox="0 0 160 80" aria-hidden="true"><path class="g-draw" d="M10 54C34 12 62 12 80 40s46 28 70-14"/><path class="g-echo" d="M20 62C44 30 64 30 80 50s40 20 60-6"/></svg>
+            <span class="eyebrow">Flow Style</span>
+            <span class="style__name" data-i18n-html="power.flowName">유전류 <i>流轉流</i></span>
+            <span class="style__motto" data-i18n="power.flowMotto">“털끝 하나 다치지 않는다.”</span>
+            <span class="style__desc" data-i18n="power.flowDesc">완벽한 방어와 흘리기. 상대의 힘을 역이용해 무력화한다.</span>
+          </button>
+          <button class="style" type="button" data-style="chaos" aria-pressed="false">
+            <svg class="style__glyph" viewBox="0 0 160 80" aria-hidden="true"><path class="g-draw" d="M14 18 64 66M40 72 90 10M72 56 150 26M106 8 138 72"/><circle cx="30" cy="60" r="2"/><circle cx="120" cy="50" r="2"/></svg>
+            <span class="eyebrow">Chaos Style</span>
+            <span class="style__name" data-i18n-html="power.chaosName">난전류 <i>亂戰流</i></span>
+            <span class="style__motto" data-i18n="power.chaosMotto">“살아남는 것이 먼저다.”</span>
+            <span class="style__desc" data-i18n="power.chaosDesc">수단과 방법을 가리지 않는 실전 검술. 암기·지형지물·심리전을 병행한다.</span>
+          </button>
+        </div>
+        <div class="panel">
+          <div class="panel__head">
+            <div><p class="eyebrow">Seven Tiers of the Sword</p><h3 data-i18n="power.ladderH">검술 7위계</h3></div>
+            <span class="panel__badge" id="ladderBadge">일섬류</span>
+          </div>
+          <ol class="ladder" id="ladder">
+            <li class="rung" style="--lv:7"><span class="rung__tier"><b data-i18n="tier.7">신급</b><i>God</i></span><span class="rung__title" data-lv="7"></span><span class="rung__who" data-lv="7"></span></li>
+            <li class="rung" style="--lv:6"><span class="rung__tier"><b data-i18n="tier.6">제급</b><i>Emperor</i></span><span class="rung__title" data-lv="6"></span><span class="rung__who" data-lv="6"></span></li>
+            <li class="rung" style="--lv:5"><span class="rung__tier"><b data-i18n="tier.5">왕급</b><i>King</i></span><span class="rung__title" data-lv="5"></span><span class="rung__who" data-lv="5"></span></li>
+            <li class="rung" style="--lv:4"><span class="rung__tier"><b data-i18n="tier.4">성급</b><i>Saint</i></span><span class="rung__title" data-lv="4"></span><span class="rung__who" data-lv="4"></span></li>
+            <li class="rung rung--common" style="--lv:3"><span class="rung__tier"><b data-i18n="tier.3">상급</b><i>Advanced</i></span><span class="rung__title" data-i18n="power.common">일반 검사</span><span class="rung__who" data-lv="3"></span></li>
+            <li class="rung rung--common" style="--lv:2"><span class="rung__tier"><b data-i18n="tier.2">중급</b><i>Adept</i></span><span class="rung__title" data-i18n="power.common">일반 검사</span><span class="rung__who" data-lv="2"></span></li>
+            <li class="rung rung--common" style="--lv:1"><span class="rung__tier"><b data-i18n="tier.1">초급</b><i>Novice</i></span><span class="rung__title" data-i18n="power.common">일반 검사</span><span class="rung__who" data-lv="1"></span></li>
+          </ol>
+          <p class="panel__note"><span data-i18n="power.ladderNote">투기와 검술 숙련도에 따라 나뉜다. 상급까지는 일반적인 검사, 그 위부터 유파의 특성을 딴 절대적 칭호가 부여되며 신급은 각 유파의 정점에 선 단 한 명뿐이다. 그리고 세 유파를 모두 넘어선 예외가 하나 있다 —</span> <button class="who who--gold" type="button" data-open="leonhardt"><span data-i18n="power.swordGod">검신</span>&nbsp;<span data-cname="leonhardt" data-short>레온하르트</span></button></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 마법 -->
+    <div class="ppanel" data-power="magic" role="tabpanel" hidden>
+      <p class="ppanel__lead" data-i18n="power.magicLead">4대 원소와 특수 마법은 그 파괴력과 규모에 따라 일곱 위계로 나뉜다.</p>
+      <ul class="elements">
+        <li style="--ec:#ff8a5c"><svg aria-hidden="true"><use href="#el-fire"/></svg><b data-i18n="power.eFire">화</b><span>Fire</span></li>
+        <li style="--ec:#6fc3ff"><svg aria-hidden="true"><use href="#el-water"/></svg><b data-i18n="power.eWater">수</b><span>Water</span></li>
+        <li style="--ec:#d6b27a"><svg aria-hidden="true"><use href="#el-earth"/></svg><b data-i18n="power.eEarth">지</b><span>Earth</span></li>
+        <li style="--ec:#9fe6c4"><svg aria-hidden="true"><use href="#el-wind"/></svg><b data-i18n="power.eWind">풍</b><span>Wind</span></li>
+        <li style="--ec:#e3c7ff" class="is-special"><svg aria-hidden="true"><use href="#el-special"/></svg><b data-i18n="power.eSpecial">특수</b><span data-i18n="power.eSpecialS">치유 · 소환 등</span></li>
+      </ul>
+      <div class="magic">
+        <div class="panel">
+          <div class="panel__head"><div><p class="eyebrow">Seven Tiers of Magic</p><h3 data-i18n="power.magicH">마법 7위계</h3></div></div>
+          <ol class="mtiers">
+            <li style="--lv:7"><b data-i18n="tier.7">신급</b><i>God</i><span></span></li>
+            <li style="--lv:6"><b data-i18n="tier.6">제급</b><i>Emperor</i><span></span></li>
+            <li style="--lv:5"><b data-i18n="tier.5">왕급</b><i>King</i><span></span></li>
+            <li style="--lv:4"><b data-i18n="tier.4">성급</b><i>Saint</i><span></span></li>
+            <li style="--lv:3"><b data-i18n="tier.3">상급</b><i>Advanced</i><span><button class="who" type="button" data-open="sera" data-cname="sera">세라 도른</button></span></li>
+            <li style="--lv:2"><b data-i18n="tier.2">중급</b><i>Adept</i><span><button class="who" type="button" data-open="reiner" data-cname="reiner">라이너 포크트</button></span></li>
+            <li style="--lv:1"><b data-i18n="tier.1">초급</b><i>Novice</i><span></span></li>
+          </ol>
+        </div>
+        <div class="panel">
+          <div class="panel__head"><div><p class="eyebrow">Mages</p><h3 data-i18n="power.magesH">대륙의 마법사들</h3></div></div>
+          <ul class="mages" id="mages"></ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- 모험가 등급 -->
+    <div class="ppanel" data-power="guild" role="tabpanel" hidden>
+      <p class="ppanel__lead" data-i18n="power.guildLead">길드에 등록한 모험가에게만 부여되는 자격. 상위 등급일수록 위험한 마물과 의뢰를 수주할 수 있다.</p>
+      <div class="panel panel--wide">
+        <ol class="guild">
+          <li data-r="F"><span class="guild__hex"><svg aria-hidden="true"><use href="#hex"/></svg><b>F</b></span><small data-i18n="power.gNew">신입</small></li>
+          <li data-r="E"><span class="guild__hex"><svg aria-hidden="true"><use href="#hex"/></svg><b>E</b></span></li>
+          <li data-r="D"><span class="guild__hex"><svg aria-hidden="true"><use href="#hex"/></svg><b>D</b></span><button class="who" type="button" data-open="mira" data-cname="mira" data-short>미라</button></li>
+          <li data-r="C"><span class="guild__hex"><svg aria-hidden="true"><use href="#hex"/></svg><b>C</b></span><button class="who" type="button" data-open="elli" data-cname="elli" data-short>엘리</button></li>
+          <li data-r="B"><span class="guild__hex"><svg aria-hidden="true"><use href="#hex"/></svg><b>B</b></span></li>
+          <li data-r="A"><span class="guild__hex"><svg aria-hidden="true"><use href="#hex"/></svg><b>A</b></span><button class="who" type="button" data-open="rosamund" data-cname="rosamund" data-short>로자문드</button></li>
+          <li data-r="S" class="is-top"><span class="guild__hex"><svg aria-hidden="true"><use href="#hex"/></svg><b>S</b></span><button class="who" type="button" data-open="vivian"><span data-cname="vivian" data-short>비비안</span>&nbsp;<small data-i18n="power.equiv">(상당)</small></button></li>
+        </ol>
+      </div>
+      <aside class="callout">
+        <svg aria-hidden="true"><use href="#em-eight"/></svg>
+        <p data-i18n-html="power.callout"><b>등급은 모험가 한정이다.</b> 세계 최강 8인도, 등록하지 않은 방랑자도 등급을 갖지 않는다. 실제 실력은 투기와 마법의 위계로 가늠하며, 모험가 등급은 어디까지나 길드의 자격 체계일 뿐이다.</p>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ V. 인물 ══════════ -->
+<section class="page" data-page="characters" aria-labelledby="chTitle" hidden>
+  <header class="chapter chapter--slim"><span class="chapter__art" aria-hidden="true" style="background-image:url('images/캐릭터/비비안 아스라.jpg')"></span>
+    <p class="chapter__num" data-rise style="--i:0">Chapter V</p>
+    <h1 class="chapter__title" id="chTitle" data-rise style="--i:1" data-i18n="nav.characters">인물</h1>
+    <p class="chapter__en" data-rise style="--i:1">Dramatis Personae</p>
+  </header>
+  <div class="wrap">
+    <div class="roster-bar">
+      <div class="ftabs" id="rosterTabs" role="tablist" aria-label="소속 선택" data-i18n-attr="aria-label:chars.tabsAria"></div>
+      <label class="search" for="rosterSearch">
+        <svg aria-hidden="true"><use href="#i-search"/></svg>
+        <input id="rosterSearch" type="search" placeholder="이름 · 계열 · 성격 검색" data-i18n-attr="placeholder:chars.search" autocomplete="off">
+      </label>
+    </div>
+    <div class="roster" id="roster" role="tabpanel" aria-live="polite"></div>
+  </div>
+</section>
+
+<!-- ══════════ VI. 관계도 ══════════ -->
+<section class="page" data-page="relations" aria-labelledby="relTitle" hidden>
+  <header class="chapter chapter--slim"><span class="chapter__art" aria-hidden="true" style="background-image:url('images/캐릭터/루나 벨구디아.jpg')"></span>
+    <p class="chapter__num" data-rise style="--i:0">Chapter VI</p>
+    <h1 class="chapter__title" id="relTitle" data-rise style="--i:1" data-i18n="nav.relations">관계도</h1>
+    <p class="chapter__en" data-rise style="--i:1">Threads of Fate</p>
+    <p class="chapter__sub" data-rise style="--i:2" data-i18n="rel.sub">진영을 넘어 얽힌 인연. 인물이나 선을 가리키면 이어진 관계가 밝아지고, 누르면 기록이 열립니다.</p>
+  </header>
+  <div class="wrap" id="relWrap">
+    <!-- 휴대폰: 인물 중심 관계도 (PC는 아래 원형 관계도) -->
+    <div class="ego" id="ego">
+      <div class="ego__picker" id="egoPicker" role="listbox" aria-label="중심 인물 고르기" data-i18n-attr="aria-label:rel.pickAria"></div>
+      <div class="ego__stage"><svg class="ego__svg" id="egoSvg" viewBox="-225 -168 450 336" role="img" aria-label="인물 중심 관계도" data-i18n-attr="aria-label:rel.egoAria"></svg></div>
+      <p class="ego__tip" data-i18n="rel.egoTip">이어진 인물을 누르면 그 인물을 중심으로 다시 그려집니다. 가운데 인물을 누르면 상세 기록이 열립니다.</p>
+      <div class="ego__info" id="egoInfo" aria-live="polite"></div>
+    </div>
+
+    <div class="graph">
+      <div class="graph__stage">
+        <svg class="graph__svg" id="graph" viewBox="-500 -500 1000 1000" role="img" aria-label="인물 관계도" data-i18n-attr="aria-label:rel.graphAria"></svg>
+      </div>
+      <aside class="graph__info" id="graphInfo" aria-live="polite"></aside>
+    </div>
+    <div class="graph__legend" id="graphLegend"></div>
+    <section class="block block--tight" aria-labelledby="relListTitle">
+      <header class="sec-head"><p class="eyebrow">Threads</p><h2 id="relListTitle" data-i18n="rel.listH">관계 목록</h2></header>
+      <ul class="threads" id="threads"></ul>
+    </section>
+  </div>
+</section>
+
+<!-- ══════════ VII. 팔대열강 ══════════ -->
+<section class="page page--eight" data-page="eight" aria-labelledby="eightTitle" hidden>
+  <header class="chapter chapter--slim chapter--gold"><span class="chapter__art" aria-hidden="true" style="background-image:url('images/캐릭터/모르가나 벨구디아.jpg')"></span>
+    <p class="chapter__num" data-rise style="--i:0">Chapter VII</p>
+    <h1 class="chapter__title" id="eightTitle" data-rise style="--i:1" data-i18n="nav.eight">팔대열강</h1>
+    <p class="chapter__en" data-rise style="--i:1">The Eight Powers · 八大列強</p>
+    <p class="chapter__sub" data-rise style="--i:2" data-i18n="eight.sub">현세 무력의 정점에 선 여덟. 문장을 누르면 그 주인이 모습을 드러낸다.</p>
+  </header>
+  <div class="wrap">
+    <div class="sigils">
+      <div class="ring" id="ring">
+        <svg class="ring__ticks" viewBox="-200 -200 400 400" aria-hidden="true">
+          <circle r="197" class="rt-thin"/>
+          <circle r="190" class="rt-dash"/>
+        </svg>
+        <div class="ring__orbit" id="ringOrbit">
+          <svg class="ring__lines" viewBox="-200 -200 400 400" aria-hidden="true">
+            <circle r="148"/>
+            <path d="M0,-148 L148,0 L0,148 L-148,0Z"/>
+            <path d="M104.7,-104.7 L104.7,104.7 L-104.7,104.7 L-104.7,-104.7Z"/>
+            <circle r="92" class="rl-inner"/>
+          </svg>
+        </div>
+        <button class="ring__core" id="ringCore" type="button"></button>
+        <span class="ring__marker" aria-hidden="true"></span>
+      </div>
+      <article class="sigil-info" id="sigilInfo" aria-live="polite"></article>
+    </div>
+    <ol class="eight-strip" id="eightStrip" aria-label="팔대열강 순위" data-i18n-attr="aria-label:eight.stripAria"></ol>
+    <p class="eight__note" data-i18n="eight.note">팔대열강은 모험가 등급을 갖지 않는다. 그 힘은 오직 투기와 마법의 위계로만 가늠될 뿐이다.</p>
+  </div>
+</section>
+
+</main>
+
+<!-- ══════════ 푸터 ══════════ -->
+<footer class="footer" id="footer">
+  <div class="wrap">
+    <nav class="pager" id="pager" aria-label="이전 · 다음 챕터" data-i18n-attr="aria-label:footer.pagerAria"></nav>
+    <div class="footer__inner">
+      <svg class="footer__mark" aria-hidden="true"><use href="#em-seal"/></svg>
+      <p class="footer__name">AETHERNOS</p>
+      <p class="footer__line" data-i18n="footer.line">봉인지 「나락 · 타르타로스」의 위치는 세계 최고 기밀이다.</p>
+      <div class="footer__actions">
+        <button class="btn btn--ghost btn--sm" type="button" id="reseal" data-i18n="footer.reseal">다시 봉인하기</button>
+        <button class="btn btn--ghost btn--sm" type="button" data-scroll="top" data-i18n="footer.top">맨 위로</button>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ══════════ 인물 상세 ══════════ -->
+<dialog class="dossier" id="dossier" aria-labelledby="dosName">
+  <div class="dossier__shell">
+    <figure class="dos__art" id="dosArt"></figure>
+    <div class="dos__main">
+      <div class="dos__scroll" id="dosScroll"></div>
+      <footer class="dos__foot" id="dosFoot"></footer>
+    </div>
+  </div>
+  <button class="dossier__close" type="button" data-close aria-label="닫기" data-i18n-attr="aria-label:common.close"><svg aria-hidden="true"><use href="#i-close"/></svg></button>
+</dialog>
+
+<!-- ══════════ 빠른 검색 ══════════ -->
+<dialog class="palette" id="palette" aria-label="빠른 검색" data-i18n-attr="aria-label:pal.aria">
+  <div class="palette__box">
+    <label class="palette__field">
+      <svg aria-hidden="true"><use href="#i-search"/></svg>
+      <input id="paletteInput" type="text" placeholder="인물 · 지역 · 챕터를 검색하세요" data-i18n-attr="placeholder:pal.placeholder" autocomplete="off" spellcheck="false" role="combobox" aria-expanded="true" aria-controls="paletteList" aria-autocomplete="list">
+      <kbd>ESC</kbd>
+    </label>
+    <ul class="palette__list" id="paletteList" role="listbox"></ul>
+    <p class="palette__foot" data-i18n-html="pal.foot"><span><kbd>↑</kbd><kbd>↓</kbd> 이동</span><span><kbd>Enter</kbd> 열기</span><span><kbd>/</kbd> 또는 <kbd>Ctrl K</kbd> 로 언제든 검색</span></p>
+  </div>
+</dialog>
+
+<!-- ══════════ 원화 크게 보기 ══════════ -->
+<dialog class="viewer" id="viewer" aria-label="원화 크게 보기" data-i18n-attr="aria-label:viewer.aria">
+  <img id="viewerImg" alt="">
+  <p class="viewer__cap" id="viewerCap"></p>
+  <button class="viewer__close" type="button" data-close aria-label="닫기" data-i18n-attr="aria-label:common.close"><svg aria-hidden="true"><use href="#i-close"/></svg></button>
+</dialog>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="js/data.js?v=8"></script>
+<script src="js/main.js?v=7"></script>
+</body>
+</html>
